@@ -11,8 +11,8 @@ class MultiVa
 {
     public const OPEN = '93';
     public const CLOSE = '94';
-    public const OPEN_PREFIX = '752088';
-    public const CLOSE_PREFIX = '752088';
+    public const OPEN_PREFIX = '797777';
+    public const CLOSE_PREFIX = '797777';
     public const LEGACY_OPEN_PREFIXES = ['7797793', '779793', '797793'];
     public const LEGACY_CLOSE_PREFIXES = ['7797794', '779794', '797794'];
 
@@ -269,7 +269,7 @@ class MultiVa
 
     public static function saldoView(string $reffBank): string
     {
-        // Client open-only (Blitar): view utama = v_saldo_va
+        // Client open-only: view utama = v_saldo_va
         if (!self::closeEnabled()) {
             return 'v_saldo_va';
         }
@@ -476,7 +476,7 @@ class MultiVa
 
         $raw = trim((string) ($tagihan->VA ?? $tagihan->va ?? ''));
         if ($raw === '') {
-            // Open-only / kolom VA kosong → default Open, jangan throw 500.
+            // Open-only / kolom VA kosong â†’ default Open, jangan throw 500.
             return self::OPEN;
         }
 
@@ -531,11 +531,11 @@ class MultiVa
 
     /**
      * Prefix bank: VA 93/94 (atau nomor lengkap) dulu, lalu cicil di master/tagihan.
-     * VA lama (mis. 81) + non-cicil → Close 797794; cicil → Open 797793.
+     * VA lama (mis. 81) + non-cicil â†’ Close 797794; cicil â†’ Open 797793.
      */
     public static function prefixFromContext(mixed $va = null, mixed $isInstallment = null, ?string $billName = null): string
     {
-        // Client open-only: semua tagihan pakai prefix Open (752088).
+        // Client open-only: semua tagihan pakai prefix Open (797777).
         if (!self::closeEnabled()) {
             return self::openPrefix();
         }

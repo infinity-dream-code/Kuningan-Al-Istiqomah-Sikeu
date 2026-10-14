@@ -310,7 +310,7 @@
                                 processErros(errors)
                             }
                         } else if (xhr.status === 419) {
-                            errorAlert('Sesi anda telah habis, Silahkan Login Kembali')
+                            // 419 dipulihkan diam-diam oleh handler global (refresh token + retry)
                         } else if (xhr.status === 500) {
                             errorAlert('Tidak dapat terhubung ke server, Silahkan periksa koneksi internet anda')
                         } else if (xhr.status === 403) {
@@ -664,7 +664,7 @@
                             }
                         }
                         if (response.status === 419) {
-                            msg = 'Sesi anda telah habis, Silahkan Login Kembali';
+                            msg = 'Silakan coba lagi.';
                         } else if (response.status === 403) {
                             msg = 'Anda tidak memiliki izin untuk mengakses halaman ini';
                         } else if (response.status === 404) {
@@ -714,7 +714,7 @@
                     if (xhr.status === 422) {
                         errorAlert('Data tidak ditemukan')
                     } else if (xhr.status === 419) {
-                        errorAlert('Sesi anda telah habis, Silahkan Login Kembali')
+                        // 419 dipulihkan diam-diam oleh handler global (refresh token + retry)
                     } else if (xhr.status === 500) {
                         errorAlert('Tidak dapat terhubung ke server, Silahkan periksa koneksi internet anda')
                     } else if (xhr.status === 403) {

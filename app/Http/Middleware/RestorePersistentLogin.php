@@ -33,7 +33,7 @@ class RestorePersistentLogin
             return $next($request);
         }
 
-        if ($request->cookie(PersistentLogin::COOKIE) || $request->cookie(PersistentLogin::LEGACY_COOKIE)) {
+        if (PersistentLogin::hasAnyCookie()) {
             PersistentLogin::forget();
         }
 

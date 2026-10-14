@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Cookie;
 
 class PersistentLogin
 {
-    public const COOKIE = 'aisyiyah_jatinom';
+    public const COOKIE = 'al-istiqomah-sikeu';
 
-    /** Legacy cookie name from previous client branding. */
-    public const LEGACY_COOKIE = 'arruhama_stay';
+    /** Legacy cookie names from previous client branding (still readable, migrated on next request). */
+    public const LEGACY_COOKIES = ['aisyiyah_jatinom', 'arruhama_stay'];
 
     public static function queue(CyberKey $user): void
     {
@@ -31,28 +31,39 @@ class PersistentLogin
             'lax'
         ));
 
-        // Drop legacy cookie if still present after rebrand.
-        if (request()->cookie(self::LEGACY_COOKIE)) {
-            Cookie::queue(Cookie::forget(self::LEGACY_COOKIE));
+        foreach (self::LEGACY_COOKIES as $legacy) {
+            if (request()->cookie($legacy)) {
+                Cookie::queue(Cookie::forget($legacy));
+            }
         }
     }
 
     public static function forget(): void
     {
         Cookie::queue(Cookie::forget(self::COOKIE));
-        Cookie::queue(Cookie::forget(self::LEGACY_COOKIE));
+        foreach (self::LEGACY_COOKIES as $legacy) {
+            Cookie::queue(Cookie::forget($legacy));
+        }
+    }
+
+    public static function hasAnyCookie(): bool
+    {
+        foreach (array_merge([self::COOKIE], self::LEGACY_COOKIES) as $name) {
+            if (request()->cookie($name)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static function rawFromRequest(): ?string
     {
-        $raw = request()->cookie(self::COOKIE);
-        if (is_string($raw) && $raw !== '') {
-            return $raw;
-        }
-
-        $legacy = request()->cookie(self::LEGACY_COOKIE);
-        if (is_string($legacy) && $legacy !== '') {
-            return $legacy;
+        foreach (array_merge([self::COOKIE], self::LEGACY_COOKIES) as $name) {
+            $raw = request()->cookie($name);
+            if (is_string($raw) && $raw !== '') {
+                return $raw;
+            }
         }
 
         return null;

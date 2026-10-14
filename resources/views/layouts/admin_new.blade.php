@@ -249,7 +249,7 @@
                         <div
                             class="footer-container d-flex align-items-center justify-content-center py-3 flex-md-row flex-column">
                             <div class="mb-2 mb-md-0 text-center">
-                                ©
+                                Â©
                                 <script>
                                     document.write(new Date().getFullYear());
                                 </script>
@@ -302,8 +302,8 @@
 
 <script src="{{asset('js/alerts.js')}}?v=20261010-no500alert"></script>
 <script>
-    window.APP_VA_OPEN = @json((string) config('app.va_open', '752088'));
-    window.APP_VA_CLOSE = @json((string) config('app.va_close', '752088'));
+    window.APP_VA_OPEN = @json((string) config('app.va_open', '797777'));
+    window.APP_VA_CLOSE = @json((string) config('app.va_close', '797777'));
     window.APP_VA_CLOSE_ENABLED = @json((bool) config('app.va_close_enabled', false));
     window.APP_VA_PREFIX = window.APP_VA_OPEN;
 </script>
